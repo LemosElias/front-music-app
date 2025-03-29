@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - App de Música</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 class="retro-title">RES API MUSIC</h1>
+            <div class="image-container">
+                <img src="disco.jpg" alt="Disco de vinilo">
+            </div>
+            <p class="subtitle">Únete a nuestra comunidad musical</p>
+            <form id="registroForm">
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu usuario" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-microphone"></i>
+                    <input type="text" id="nombreArtistico" name="nombreArtistico" placeholder="Ingresa tu nombre artístico" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <button id="btnreguistrar">Registrar</button>
+            </form>
+        </div>
+    </div>
+  
+</body>
+<script src="reguisto.js"></script>
+</html>

@@ -1,0 +1,116 @@
+/* Configuración básica */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('fondo.jpg') no-repeat center center fixed; /* Fondo de música */
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+    padding: 30px 20px;
+    text-align: center;
+}
+
+/* Título estilo ochentero */
+.retro-title {
+    font-family: 'Press Start 2P', cursive; /* Fuente estilo años 80 */
+    font-size: 2.5rem;
+    color: #ffe500; /* Amarillo vibrante */
+    text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff; /* Efecto de neón */
+    margin-bottom: 10px;
+    letter-spacing: 2px; /* Espaciado para estilo retro */
+}
+
+/* Imagen del disco */
+.image-container img {
+    width: 120px;
+    height: 120px;
+    margin: 15px 0; /* Espaciado superior e inferior */
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.7); /* Borde decorativo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra */
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.input-group i {
+    margin-right: 10px;
+    color: #ffe500; /* Icono color amarillo */
+}
+
+.input-group:hover {
+    background-color: #444;
+}
+
+input {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+/* Botón */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffe500;
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffcc00;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+}
+
+button:active {
+    background-color: #d4b200;
+    transform: scale(0.95);
+}
