@@ -18,7 +18,7 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 500px;
     text-align: center;
 }
 
@@ -52,8 +52,8 @@ h2 {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: #dfdc3b; ;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -62,7 +62,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #9b9924; ;
 }
 
 .registrarse {
@@ -72,7 +72,7 @@ button:hover {
 }
 
 .registrarse a {
-    color: #007bff;
+    color: #dfdc3b;
     text-decoration: none;
 }
 
