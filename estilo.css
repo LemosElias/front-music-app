@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;  
-    background-color: #f4f4f4;
+    background-color:#1e1e1e;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@ body {
 }
 
 .login-container {
-    background-color: #fff;
+    background-color: #2a2a2a;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -25,7 +25,7 @@ body {
 h2 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: #ffffff;
 }
 
 .input-group {
@@ -35,7 +35,7 @@ h2 {
 
 .input-group label {
     font-size: 14px;
-    color: #555;
+    color: #ffffff;
     margin-bottom: 5px;
     display: block;
 }
@@ -68,7 +68,7 @@ button:hover {
 .registrarse {
     margin-top: 20px;
     font-size: 14px;
-    color: #555;
+    color: #ffffff;
 }
 
 .registrarse a {
