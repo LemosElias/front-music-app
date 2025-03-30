@@ -19,21 +19,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-/* Crear un metodo para hacer un fetch al login
-desarrollado en el backend
-*/
+const mostrarSpinner = (mostrar) => {
+    const contenedorSpinner = document.querySelector('.contenedor-spinner');
+    if (mostrar) {
+        contenedorSpinner.style.display = 'flex'; 
+    } else {
+        contenedorSpinner.style.display = 'none'; 
+    }
+};
+
 const login = async () => {
     let campos = {};
-    campos.username = document.getElementById("nombre").value.trim(); // Ajustado a 'username'
-    campos.password = document.getElementById("contraseña").value.trim(); // Ajustado a 'password'
+    campos.username = document.getElementById("nombre").value.trim();
+    campos.password = document.getElementById("contraseña").value.trim();
 
-    // Validar que los campos no estén vacíos
     if (!campos.username || !campos.password) {
         alert("Por favor completa todos los campos.");
         return;
     }
-    console.log("Datos enviados para logni:", campos);
+
     try {
+        // Mostrar el spinner antes de hacer la petición
+        mostrarSpinner(true);
+
         const peticion = await fetch("http://localhost:8080/Artist/auth", {
             method: 'POST',
             headers: {
@@ -44,11 +52,10 @@ const login = async () => {
         });
 
         if (peticion.ok) {
-            const token = await peticion.text(); 
-            localStorage.setItem('token', token); 
+            const token = await peticion.text();
+            localStorage.setItem('token', token);
             alert("Autenticación exitosa.");
-            window.location.href = "./menu-principal.html";
-
+            window.location.href = "./menu-principal.html"; // Redirigir a la página principal
         } else {
             alert("Credenciales incorrectas.");
         }
@@ -56,7 +63,8 @@ const login = async () => {
     } catch (error) {
         console.error("Error al conectar con el servidor:", error);
         alert("No se pudo conectar con el servidor.");
+    } finally {
+        // Ocultar el spinner después de que se haya completado la solicitud
+        mostrarSpinner(false);
     }
 };
-
-
