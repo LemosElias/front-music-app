@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro - App de Música</title>
     <link rel="stylesheet" href="/vistas/estilos/crear-usuario.css" />
+    <link rel="stylesheet" href="/vistas/estilos/spinner.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
   </head>
   <body class="body">
     <div class="contenedor-crear">
-        <h2>Registro</h2>
+        <h2>Ingrese sus datos para comenzar</h2>
         <div class="campos">
           <input type="text"  id="nombre" placeholder="Usuario" />
           <input type="text"  id="nombreArtistico" placeholder="Nombre artista" />
           <input type="password"  id="contraseña" placeholder="Contraseña" />
         </div>
-        
         <button id="btnRegistrarUsuario">Crear</button>
+        
+        <div class="contenedor-spinner">
+          <div class="lds-hourglass"></div>
+        </div>
+        
       </div>
   </body>
   <script src="/controlador/crear-usuario.js"></script>

@@ -12,6 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+let isLoading = false;
+
+// Función para mostrar u ocultar el spinner
+const mostrarSpinner = (mostrar) => {
+    const contenedorSpinner = document.querySelector('.contenedor-spinner');
+    if (mostrar) {
+        contenedorSpinner.style.display = 'block'; 
+    } else {
+        contenedorSpinner.style.display = 'none'; 
+    }
+};
+
 /* Ejecuta la la llamada al backend para crear un usuario */
 let registrarUsuario = async () => {
     let campos = {};
@@ -25,7 +37,11 @@ let registrarUsuario = async () => {
         return;
     }
 
-    console.log("Datos enviados:", campos); 
+    console.log("Datos enviados:", campos);
+
+    // Mostrar el spinner antes de hacer la petición
+    mostrarSpinner(true);
+    isLoading = true;
 
     try {
         const peticion = await fetch("http://localhost:8080/Artist", {
@@ -38,9 +54,9 @@ let registrarUsuario = async () => {
         });
 
         if (peticion.ok) {
-            const respuestaTexto = await peticion.text(); 
+            const respuestaTexto = await peticion.text();
             if (respuestaTexto) {
-                const respuesta = JSON.parse(respuestaTexto); 
+                const respuesta = JSON.parse(respuestaTexto);
                 console.log("Registro exitoso:", respuesta);
                 alert("Registro exitoso.");
             } else {
@@ -56,5 +72,9 @@ let registrarUsuario = async () => {
     } catch (error) {
         console.error("Error al conectar con el servidor:", error);
         alert("No se pudo conectar con el servidor.");
+    } finally {
+        // Ocultar el spinner después de que se haya completado la solicitud
+        mostrarSpinner(false);
+        isLoading = false;
     }
 };

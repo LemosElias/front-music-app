@@ -34,10 +34,29 @@ const login = async () => {
     }
     console.log("Datos enviados para logni:", campos);
     try {
-        const peticion = await fetch("http://localhost:8080/Login");
-        window.location.href = "./menu-principal.html";  
+        const peticion = await fetch("http://localhost:8080/Artist/auth", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(campos),
+        });
+
+        if (peticion.ok) {
+            const token = await peticion.text(); 
+            localStorage.setItem('token', token); 
+            alert("Autenticación exitosa.");
+            window.location.href = "./menu-principal.html";
+
+        } else {
+            alert("Credenciales incorrectas.");
+        }
+    
     } catch (error) {
         console.error("Error al conectar con el servidor:", error);
         alert("No se pudo conectar con el servidor.");
     }
 };
+
+

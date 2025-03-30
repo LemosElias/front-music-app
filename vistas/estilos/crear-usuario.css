@@ -1,58 +1,100 @@
-/* Fondo general */
 .body {
-    background-color: #1e1e1e;
-    color: #fff;
-   
-    font-family: 'Press Start 2P', cursive;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0 15px; 
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  /* Contenedor del formulario */
-  .contenedor-crear {
-    background-color: #2a2a2a;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  /* Estilos para los inputs */
-  .contenedor-crear input {
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    outline: none;
-    text-align: center;
-  }
-  
-  /* Botón de crear */
-  .contenedor-crear button {
-    background-color: #ff4757;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  
-  .contenedor-crear button:hover {
-    background-color: #e84141;
-  }
-  
-  .poppins-extralight {
-    font-family: "Poppins", sans-serif;
-    font-weight: 200;
-    font-style: normal;
-  }
+
+.contenedor-crear {
+  background-color: #2a2a2a;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  max-width: 350px;  
+  text-align: center;
+  transform: scale(1); 
+  transition: transform 0.2s ease-in-out;
+}
+
+.contenedor-crear:hover {
+  transform: scale(1.05); 
+}
+
+
+.contenedor-crear input {
+  padding: 12px;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  text-align: center;
+  background-color: #333; 
+  color: #fff;
+  transition: border-color 0.3s;
+}
+
+.contenedor-crear input:focus {
+  border-color: #9b9924; 
+}
+
+
+.contenedor-crear button {
+  background-color: #d4d36b;  
+  color: rgb(0, 0, 0);
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.contenedor-crear button:hover {
+  background-color: #a3a11c; 
+  transform: translateY(-2px); 
+}
+
+.contenedor-crear button:active {
+  transform: translateY(1px);
+}
+
+
+.contenedor-crear h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 600; 
+}
+
+
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.campos input {
+  margin-bottom: 10px;
+}
+
+
+/* Estilo para ocultar el spinner por defecto */
+.contenedor-spinner {
+  display: none;  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
