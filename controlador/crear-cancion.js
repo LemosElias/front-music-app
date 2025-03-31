@@ -32,7 +32,7 @@ let reguistrarCancion = async () => {
     campos.genre = document.getElementById("genero").value.trim();
 
      // Validar que los campos no estén vacíos
-     if(!campos.name || campos.genre ){
+     if(!campos.name || !campos.genre ){
         alert("Por favor complete todos los campos. ")
         return
      }
