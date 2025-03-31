@@ -1,8 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("ir-a-registrar").addEventListener("click", function () {
-        window.location.href = "./crear-usuario.html";
-    });
-});
 
 
 /* Método para asignar evento al boton ingresar */

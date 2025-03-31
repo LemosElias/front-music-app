@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Canción - App de Música</title>
+    <link rel="stylesheet" href="crear.css">
+    <link rel="stylesheet" href="../vistas/estilos/crear-cancion.css" />
+    
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="contenedor-crear-cancion">
+        <h2>Ingrese los datos de su canción</h2>
+        <div class="campos">
+            <input type="text" id="nombre-cancion" placeholder="Nombre" />
+            <input type="text" id="genero" placeholder="Género"/>
+            <input type="text" id="Autor" placeholder="Autor"/>
+        </div>
+        <button id="btnCrear-cancion">Crear</button>
+    </div>
+
+    <!-- Tabla para listar canciones -->
+    <div class="lista-canciones">
+        <h3>Lista de Canciones</h3>
+        <table id="tabla-canciones">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Género</th>
+                    <th>Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se irán añadiendo las canciones -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="canciones.js"></script> <!-- Archivo JS -->
+</body>
+</html>
