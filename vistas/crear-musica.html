@@ -4,23 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Canción - App de Música</title>
+    <link rel="stylesheet" href="/vistas/estilos/spinner.css" />
     <link rel="stylesheet" href="../vistas/estilos/crear-cancion.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="body">
     <div class="contenedor-crear-cancion">
         <h2>Ingrese los datos de su canción</h2>
         <div class="campos">
             <input type="text" id="nombre-cancion" placeholder="Nombre" />
             <input type="text" id="genero" placeholder="Género"/>
         </div>
-        <button id="btnCrearcancion">Crear</button>
+        <button id="btnCrearcancion">Crear Canción</button>
     </div>
 
-    <!-- Tabla para listar canciones -->
+    <div class="contenedor-spinner">
+        <div class="lds-hourglass"></div>
+    </div>
+
+    <!-- Sección para listar canciones -->
     <div class="lista-canciones">
         <h3>Lista de Canciones</h3>
+        <button id="btnListarCanciones">Listar Canciones</button> 
         <table id="tabla-canciones">
             <thead>
                 <tr>
@@ -30,11 +36,12 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se irán añadiendo las canciones -->
+                <!-- Aquí se irán añadiendo las canciones dinámicamente -->
             </tbody>
         </table>
     </div>
 
     <script src="/controlador/crear-cancion.js"></script>
+    <script src="/controlador/listar-canciones.js"></script> <!-- Script para listar canciones -->
 </body>
 </html>
