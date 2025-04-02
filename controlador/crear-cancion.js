@@ -3,13 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (boton) {
         boton.addEventListener("click", async (evento) => {
-            evento.preventDefault(); // Prevenir el envío por defecto del formulario
-
-            mostrarSpinner(true); // Mostrar el spinner al hacer clic en el botón
-            
-            await registrarCancion(); // Llamar a la función de registro
-            
-            mostrarSpinner(false); // Ocultar el spinner después de la respuesta
+            evento.preventDefault(); 
+            mostrarSpinner(true); 
+            await registrarCancion();  
+            mostrarSpinner(false);
         });
     } else {
         console.error("El botón con ID 'btnCrearcancion' no se encontró en el DOM.");
