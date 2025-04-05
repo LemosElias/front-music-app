@@ -21,12 +21,12 @@ const obtenerCanciones = async () => {
             throw new Error("Usuario no autenticado: Token no encontrado.");
         }
 
-        const respuesta = await fetch("http://localhost:8080/songs/getSongs", { // CORREGIDO
+        const respuesta = await fetch("http://localhost:8080/songs/getSongs", { 
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Se incluye el token en la cabecera
+                'Authorization': `Bearer ${token}` 
             }
         });
 
@@ -35,7 +35,7 @@ const obtenerCanciones = async () => {
         }
 
         const datos = await respuesta.json();
-        console.log("Datos recibidos:", datos); // Depuración
+        console.log("Datos recibidos:", datos); 
 
        
         const canciones = datos.songs && Array.isArray(datos.songs) ? datos.songs[0] : [];
