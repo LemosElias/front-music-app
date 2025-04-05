@@ -37,7 +37,7 @@ const obtenerCanciones = async () => {
         const datos = await respuesta.json();
         console.log("Datos recibidos:", datos); // Depuración
 
-        // **CORRECCIÓN: Extraer el array correctamente**
+       
         const canciones = datos.songs && Array.isArray(datos.songs) ? datos.songs[0] : [];
         if (!Array.isArray(canciones)) {
             throw new Error("El formato de la respuesta del servidor no es válido.");

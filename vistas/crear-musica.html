@@ -14,7 +14,15 @@
         <h2>Ingrese los datos de su canción</h2>
         <div class="campos">
             <input type="text" id="nombre-cancion" placeholder="Nombre" />
-            <input type="text" id="genero" placeholder="Género"/>
+            <select id="genero">
+                <option value="" disabled selected>Seleccione un género</option>
+                <option value="Rock">Rock</option>
+                <option value="techno">techno</option>
+                <option value="pop">pop</option>
+                <option value="jazz">jazz</option>
+                <option value="folk">folk</option>
+                <option value="classical">classical</option>
+            </select>
         </div>
         <button id="btnCrearcancion">Crear Canción</button>
     </div>
