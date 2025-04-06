@@ -25,19 +25,36 @@ h2 {
 }
 
 /* Campos del formulario */
-.campos input {
+.campos input, .campos select {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
 }
 
-.campos input:focus {
+/* Mejora la apariencia cuando el select está enfocado */
+.campos select:focus, .campos input:focus {
     outline: none;
     border-color: #4A90E2;
     box-shadow: 0px 0px 4px rgba(74, 144, 226, 0.5);
+}
+
+/* Agregar un ícono de flecha en el combobox */
+.campos select {
+    appearance: none; /* Oculta los estilos nativos en algunos navegadores */
+    background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234A90E2" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 5.854a.5.5 0 0 1 .708 0L8 11.293l5.646-5.439a.5.5 0 1 1 .708.708l-6 5.793a.5.5 0 0 1-.708 0l-6-5.793a.5.5 0 0 1 0-.708z"/></svg>') no-repeat right 10px center;
+    background-size: 16px;
+    padding-right: 30px;
+}
+
+/* Mejora el comportamiento al pasar el mouse */
+select:hover {
+    border-color: #357ABD;
 }
 
 /* Botón */
