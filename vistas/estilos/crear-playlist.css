@@ -1,184 +1,151 @@
 /* Estilo general del cuerpo */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f7f9fc;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 20px;
+  color: #333;
 }
 
-/* Contenedor principal */
+/* Título principal */
+.titulo-principal {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Contenedor del formulario para crear playlist */
 .contenedor-crear-playlist {
-    max-width: 500px;
-    margin: 0 auto 20px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  max-width: 500px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .contenedor-crear-playlist h2 {
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #4A90E2;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #4A90E2;
 }
 
-/* Campos del formulario */
-.campos-playlist input, .campos-playlist select {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: white;
-    color: #333;
-    cursor: pointer;
+/* Input */
+.contenedor-crear-playlist input[type="text"] {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
 }
 
-.campos-playlist input:focus, .campos-playlist select:focus {
-    outline: none;
-    border-color: #4A90E2;
-    box-shadow: 0px 0px 4px rgba(74, 144, 226, 0.5);
+.contenedor-crear-playlist input[type="text"]:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0px 0px 4px rgba(74, 144, 226, 0.5);
 }
 
-/* Agregar un ícono de flecha en el combobox */
-.campos-playlist select {
-    appearance: none;
-    background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234A90E2" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 5.854a.5.5 0 0 1 .708 0L8 11.293l5.646-5.439a.5.5 0 1 1 .708.708l-6 5.793a.5.5 0 0 1-.708 0l-6-5.793a.5.5 0 0 1 0-.708z"/></svg>') no-repeat right 10px center;
-    background-size: 16px;
-    padding-right: 30px;
+/* Botón crear */
+#btnCrearPlaylist {
+  background-color: #4A90E2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.campos-playlist select:hover {
-    border-color: #357ABD;
+#btnCrearPlaylist:hover {
+  background-color: #357ABD;
 }
 
-/* Botón */
-#btnCrear-playlist {
-    background-color: #4A90E2;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Botones secundarios */
+.boton-principal,
+.boton-secundario {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+  display: inline-block;
 }
 
-#btnCrear-playlist:hover {
-    background-color: #357ABD;
-}
-
-/* Tabla */
-#tabla-playlists {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-#tabla-playlists th, #tabla-playlists td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-#tabla-playlists th {
-    background-color: #4A90E2;
-    color: white;
-    font-weight: 600;
-}
-
-#tabla-playlists tr:nth-child(even) {
-    background-color: #f7f9fc;
-}
-
-#tabla-playlists tr:hover {
-    background-color: #e2f0ff;
-}
-.contenedor-lista-playlists {
-    margin-top: 40px;
-  }
-
-  #tabla-playlists {
-    margin-top: 15px;
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  #tabla-playlists th, #tabla-playlists td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-  }
-
-  #btnTogglePlaylists {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 8px 12px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-
-  #tabla-playlists-container {
-    display: none;
-    transition: all 0.3s ease;
-  }
-
-  .encabezado-playlists {
-text-align: center;
-margin-bottom: 20px;
-}
-
-.encabezado-playlists h2 {
-margin-bottom: 10px;
-}
-
-#btnTogglePlaylists {
-padding: 8px 12px;
-background-color: #4caf50;
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-font-weight: 500;
-}
-.titulo-principal {
-text-align: center;
-margin-top: 30px;
-margin-bottom: 20px;
-font-size: 2rem;
-font-weight: 600;
-color: #333;
-}
 .boton-principal {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  background-color: #4A90E2;
+  color: #fff;
+  border: none;
+}
 
-  .boton-principal:hover {
-    background-color: #0056b3;
-  }
+.boton-principal:hover {
+  background-color: #357ABD;
+}
 
-  .d-flex {
-    display: flex;
-  }
+.boton-secundario {
+  background-color: #f0f0f0;
+  color: #4A90E2;
+  border: 1px solid #4A90E2;
+}
 
-  .justify-content-center {
-    justify-content: center;
-  }
+.boton-secundario:hover {
+  background-color: #e2f0ff;
+}
 
-  .mb-4 {
-    margin-bottom: 1.5rem;
-  }
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#tabla-playlists th,
+#tabla-playlists td,
+#tabla-canciones-playlist th,
+#tabla-canciones-playlist td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#tabla-playlists th,
+#tabla-canciones-playlist th {
+  background-color: #4A90E2;
+  color: white;
+  font-weight: 600;
+}
+
+#tabla-playlists tr:nth-child(even),
+#tabla-canciones-playlist tr:nth-child(even) {
+  background-color: #f7f9fc;
+}
+
+#tabla-playlists tr:hover,
+#tabla-canciones-playlist tr:hover {
+  background-color: #e2f0ff;
+}
+
+/* Contenedores de tablas */
+.contenedor-lista-playlists,
+.contenedor-canciones-playlist {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Contenedor de botones */
+.contenedor-boton {
+  text-align: center;
+  margin-top: 20px;
+}
