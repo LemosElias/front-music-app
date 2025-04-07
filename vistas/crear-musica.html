@@ -11,18 +11,20 @@
 </head>
 <body class="body">
     <h1 class="titulo-principal">Gestión de Canciones</h1>
+
+    <!-- Sección para crear una canción -->
     <div class="contenedor-crear-cancion">
-        <h2>Ingrese su Cancion</h2>
+        <h2>Ingrese su Canción</h2>
         <div class="campos">
-            <input type="text" id="nombre-cancion" placeholder="Nombre de la Cancion" />
+            <input type="text" id="nombre-cancion" placeholder="Nombre de la Canción" />
             <select id="genero">
-                <option value="" disabled selected>Seleccione el Género de la Cancion</option>
-                <option value="rock">rock</option> <!--Cambiar el segundo rock por Rock y probar si funciona igual con el back-->
-                <option value="techno">techno</option>
-                <option value="pop">pop</option>
-                <option value="jazz">jazz</option>
-                <option value="folk">folk</option>
-                <option value="classical">classical</option>
+                <option value="" disabled selected>Seleccione el Género de la Canción</option>
+                <option value="rock">Rock</option>
+                <option value="techno">Techno</option>
+                <option value="pop">Pop</option>
+                <option value="jazz">Jazz</option>
+                <option value="folk">Folk</option>
+                <option value="classical">Classical</option>
             </select>
         </div>
         <button id="btnCrearcancion">Crear Canción</button>
@@ -32,27 +34,46 @@
         <div class="lds-hourglass"></div>
     </div>
 
-    <!-- Sección para listar canciones -->
+    <!-- Sección para listar y filtrar canciones -->
     <div class="lista-canciones">
         <h3>Lista de Canciones</h3>
         <button id="btnListarCanciones">Listar Todas las Canciones</button> 
-        <button id="btnListarMisCanciones">Listar Mis Canciones</button> <!-- Nuevo botón para el usuario autenticado -->
+        <button id="btnListarMisCanciones">Listar Mis Canciones</button> 
+
+        <!-- Sección de filtrado -->
+        <div class="contenedor-filtro">
+            <h3>Filtrar Canciones</h3>
+            <div class="campos">
+                <input type="text" id="filtro-artista" placeholder="Nombre del artista" />
+                <select id="filtro-genero">
+                    <option value="" disabled selected>Seleccione el Género</option>
+                    <option value="rock">Rock</option>
+                    <option value="techno">Techno</option>
+                    <option value="pop">Pop</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="folk">Folk</option>
+                    <option value="classical">Classical</option>
+                </select>
+            </div>
+            <button id="btnFiltrarCanciones">Filtrar Canciones</button>
+        </div>
+
         <table id="tabla-canciones">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Género</th>
                     <th>Autor</th>
-                    <th>Acciones</th> <!-- Nueva columna -->
+                    <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-canciones"> <!-- Se agregó ID para referencia correcta -->
                 <!-- Aquí se irán añadiendo las canciones dinámicamente -->
             </tbody>
         </table>
     </div>
 
-    <script src="/controlador/crear-cancion.js"></script>
-    <script src="/controlador/Listado-canciones.js"></script> <!-- Script para listar canciones -->
+    <script src="/controlador/Listado-canciones.js"></script> <!-- Primero -->
+    <script src="/controlador/crear-cancion.js"></script> <!-- Segundo -->
 </body>
 </html>
