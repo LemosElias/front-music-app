@@ -23,50 +23,51 @@
   <div class="contenedor-spinner">
     <div class="lds-hourglass"></div>
   </div>
+<!-- Botón listar playlists -->
+<div class="contenedor-boton mb-4">
+  <button id="btnListarPlaylists" class="boton-principal">📋 Listar Playlists</button>
+</div>
 
+<!-- Botón toggle -->
+<div class="contenedor-boton mb-4">
+  <button id="btnTogglePlaylists" class="boton-secundario">🎧 Ver Playlists</button>
+</div>
 
  <!-- Tabla de Playlists -->
-<div class="contenedor-lista-playlists">
-    <div class="encabezado-playlists">
-      <h2>Listado de Playlists</h2>
-      <button id="btnTogglePlaylists">🎧 Ver Playlists</button>
-    </div>
-  
-    <div id="tabla-playlists-container">
-      <table id="tabla-playlists">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Cantidad de Canciones</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Playlist 1</td>
-            <td>Descripción de la Playlist 1</td>
-            <td>10</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-eliminar">Eliminar</button>
-              <button class="btn-canciones">Canciones</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Playlist 2</td>
-            <td>Descripción de la Playlist 2</td>
-            <td>8</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-eliminar">Eliminar</button>
-              <button class="btn-canciones">Canciones</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="contenedor-lista-playlists" style="display: none;">
+  <h2 style="text-align: center;">Listado de Playlists</h2>
+  <table id="tabla-playlists">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Cantidad de Canciones</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="playlist-tbody">
+      <!-- Filas dinámicas -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Tabla de canciones de una playlist -->
+<div class="contenedor-canciones-playlist" style="display: none; margin-top: 30px;">
+  <h2 style="text-align: center;">Canciones de la Playlist</h2>
+  <table id="tabla-canciones-playlist">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="canciones-tbody">
+      <!-- Canciones se cargan dinámicamente -->
+    </tbody>
+  </table>
+</div>
+
   
   
 

@@ -156,3 +156,29 @@ font-size: 2rem;
 font-weight: 600;
 color: #333;
 }
+.boton-principal {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .boton-principal:hover {
+    background-color: #0056b3;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .justify-content-center {
+    justify-content: center;
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
