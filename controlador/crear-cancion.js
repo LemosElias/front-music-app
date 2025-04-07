@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const mostrarSpinner = (mostrar) => {
     const contenedorSpinner = document.querySelector('.contenedor-spinner');
     if (contenedorSpinner) {
-        contenedorSpinner.style.display = mostrar ? 'block' : 'none';
+        contenedorSpinner.style.display = mostrar ? 'flex' : 'none';
     } else {
         console.error("El elemento con clase 'contenedor-spinner' no existe en el DOM.");
     }

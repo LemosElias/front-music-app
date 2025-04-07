@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear Playlist - App de Música</title>
+  <link rel="stylesheet" href="/vistas/estilos/spinner.css" />
+  <link rel="stylesheet" href="../vistas/estilos/crear-playlist.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body class="body">
+    <h1 class="titulo-principal">Gestión de Playlists</h1>
+  <div class="contenedor-crear-playlist">
+    <h2>Crear nueva Playlist</h2>
+    <input type="text" id="nombre-playlist" placeholder="Nombre de la Playlist" />
+    <button id="btnCrearPlaylist">Crear Playlist</button>
+  </div>
+
+  <div class="contenedor-spinner">
+    <div class="lds-hourglass"></div>
+  </div>
+
+
+ <!-- Tabla de Playlists -->
+<div class="contenedor-lista-playlists">
+    <div class="encabezado-playlists">
+      <h2>Listado de Playlists</h2>
+      <button id="btnTogglePlaylists">🎧 Ver Playlists</button>
+    </div>
+  
+    <div id="tabla-playlists-container">
+      <table id="tabla-playlists">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Cantidad de Canciones</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Playlist 1</td>
+            <td>Descripción de la Playlist 1</td>
+            <td>10</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-eliminar">Eliminar</button>
+              <button class="btn-canciones">Canciones</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Playlist 2</td>
+            <td>Descripción de la Playlist 2</td>
+            <td>8</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-eliminar">Eliminar</button>
+              <button class="btn-canciones">Canciones</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("btnTogglePlaylists");
+      const tablaContainer = document.getElementById("tabla-playlists-container");
+
+      let visible = false;
+
+      toggleBtn.addEventListener("click", () => {
+        visible = !visible;
+        tablaContainer.style.display = visible ? "block" : "none";
+        toggleBtn.textContent = visible ? "🔽 Ocultar Playlists" : "🎧 Ver Playlists";
+      });
+    });
+  </script>
+
+  <script src="/controlador/crear-playlist.js"></script>
+</body>
+</html>
