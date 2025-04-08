@@ -19,7 +19,7 @@ const obtenerPlaylists = async () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Usuario no autenticado: Token no encontrado.");
 
-        const respuesta = await fetch("http://localhost:8080/playlists/getAll", {
+        const respuesta = await fetch("http://localhost:8080/Playlist/getPlaylist", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ const obtenerPlaylists = async () => {
         tablaBody.innerHTML = "";
 
         playlists.forEach(playlist => {
-            if (!playlist.id || !playlist.name || !playlist.description) {
+            if (!playlist.name ) {
                 console.warn("Playlist con datos incompletos:", playlist);
                 return;
             }
@@ -49,12 +49,12 @@ const obtenerPlaylists = async () => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${playlist.name}</td>
-                <td>${playlist.description}</td>
-                <td>${Array.isArray(playlist.songs) ? playlist.songs.length : 0}</td>
+                <td>${playlist.songCount}</td>
                 <td>
                     <button class="editar-playlist" data-id="${playlist.id}">✏️ Editar</button>
                     <button class="eliminar-playlist" data-id="${playlist.id}">🗑️ Eliminar</button>
                     <button class="ver-canciones" data-id="${playlist.id}">🎵 Canciones</button>
+                    <button class="btn-agregar-cancion" data-id="${playlist.id}">➕ Agregar Canción</button>
                 </td>
 
             `;
@@ -82,6 +82,12 @@ const obtenerPlaylists = async () => {
                 mostrarCancionesDePlaylist(idPlaylist);
             });
         });
+        document.querySelectorAll(".btn-agregar-cancion").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const playlistId = btn.getAttribute("data-id");
+                mostrarCancionesParaAgregar(playlistId);
+            });
+        });
         
 
     } catch (error) {
@@ -92,15 +98,111 @@ const obtenerPlaylists = async () => {
     }
 };
 
+const mostrarCancionesParaAgregar = async (playlistId) => {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("No estás autenticado");
+
+    try {
+        // Pedimos todas las canciones
+            const resTodas = await fetch("http://localhost:8080/songs/getSongs", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                }
+        });
+
+        const dataCanciones = await resTodas.json();
+
+        // 🔍 Esto es para sacar el array interno: songs: [[{...}]]
+        const todasLasCanciones = dataCanciones.songs.flat(); // ¡Aplana el array!
+
+
+        
+        // Pedimos los detalles de la playlist (incluye canciones)
+        const resPlaylist = await fetch(`http://localhost:8080/Playlist/${playlistId}/songs`, {
+            method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                }
+        });
+    
+        const aux = await resPlaylist.json(); // contiene songs: []
+        const cancionesPlaylist = aux.songs || [];
+        // Filtramos las canciones que no están en la playlist
+        const cancionesEnPlaylistIds = new Set(cancionesPlaylist.map(c => c.id));
+        const cancionesParaAgregar = todasLasCanciones.filter(c => !cancionesEnPlaylistIds.has(c.id));
+
+        // Mostramos en tabla
+        const contenedor = document.querySelector(".contenedor-canciones-playlist");
+        const tbody = document.querySelector("#canciones-tbody");
+        tbody.innerHTML = "";
+
+        cancionesParaAgregar.forEach(cancion => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${cancion.name}</td>
+                <td>${cancion.genre}</td>
+                <td>
+                    <button class="agregar-cancion" data-playlist-id="${playlistId}" data-cancion-id="${cancion.id}">
+                        ➕ Agregar
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(fila);
+        });
+
+        contenedor.style.display = "block";
+
+        // Asignamos eventos a los botones
+        document.querySelectorAll(".agregar-cancion").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const cancionId = btn.getAttribute("data-cancion-id");
+
+                try {
+                    const addRes = await fetch(`http://localhost:8080/Playlist/add/${playlistId}/songs`, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ songId: parseInt(cancionId) }) 
+                    });
+
+                    if (addRes.ok) {
+                        alert("🎶 Canción agregada correctamente.");
+                        // Recargamos para actualizar lista
+                        mostrarCancionesParaAgregar(playlistId);
+                        mostrarCancionesDePlaylist(playlistId);
+                        obtenerPlaylists();
+                    } else {
+                        const msg = await addRes.text();
+                        alert("Error al agregar canción: " + msg);
+                    }
+                } catch (err) {
+                    console.error("Error al agregar canción:", err);
+                    alert("Error al agregar canción.");
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Error cargando canciones para agregar:", error);
+        alert("Error cargando canciones para agregar.");
+    }
+};
+
 
 // Función para editar playlist
 const editarPlaylist = async (id) => {
     if (!id) return alert("ID inválido");
 
     const nuevoNombre = prompt("Ingrese el nuevo nombre de la playlist:").trim();
-    const nuevaDescripcion = prompt("Ingrese la nueva descripción:").trim();
 
-    if (!nuevoNombre || !nuevaDescripcion) {
+    if (!nuevoNombre ) {
         return alert("Debe completar ambos campos.");
     }
 
@@ -108,15 +210,14 @@ const editarPlaylist = async (id) => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token no encontrado.");
 
-        const respuesta = await fetch(`http://localhost:8080/playlists/update/${id}`, {
+        const respuesta = await fetch(`http://localhost:8080/Playlist/update/${id}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name: nuevoNombre,
-                description: nuevaDescripcion
+                name: nuevoNombre
             })
         });
 
@@ -143,7 +244,7 @@ const eliminarPlaylist = async (id) => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token no encontrado.");
 
-        const respuesta = await fetch(`http://localhost:8080/playlists/delete/${id}`, {
+        const respuesta = await fetch(`http://localhost:8080/Playlist/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -151,7 +252,7 @@ const eliminarPlaylist = async (id) => {
             }
         });
 
-        if (respuesta.status === 204) {
+        if (respuesta.status === 201) {
             alert("Playlist eliminada correctamente.");
             obtenerPlaylists();
         } else {
@@ -163,26 +264,28 @@ const eliminarPlaylist = async (id) => {
         alert("Error al eliminar la playlist.");
     }
 };
-// Mostrar canciones de una playlist
+
 const mostrarCancionesDePlaylist = async (playlistId) => {
     const token = localStorage.getItem("token");
     if (!token) return alert("No estás autenticado");
 
     try {
-        const respuesta = await fetch(`http://localhost:8080/playlist/${playlistId}/songs`, {
+        const respuesta = await fetch(`http://localhost:8080/Playlist/${playlistId}/songs`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         });
 
-        if (!respuesta.ok) throw new Error("No se pudieron obtener las canciones");
+        const respuestaJson = await respuesta.json();
+        const canciones = respuestaJson.songs;
 
-        const canciones = await respuesta.json();
+        if (!respuesta.ok) throw new Error("No se pudieron obtener las canciones");
 
         const contenedor = document.querySelector(".contenedor-canciones-playlist");
         const tbody = document.querySelector("#canciones-tbody");
 
+        // Limpiamos tabla
         tbody.innerHTML = "";
 
         canciones.forEach(cancion => {
@@ -196,42 +299,51 @@ const mostrarCancionesDePlaylist = async (playlistId) => {
                     </button>
                 </td>
             `;
+            console.log("▶️ Botón generado con playlistId:", playlistId, "cancionId:", cancion.id);
             tbody.appendChild(fila);
         });
 
         contenedor.style.display = "block";
-
-        // Agregar eventos a los botones de borrar canción
-        document.querySelectorAll(".borrar-cancion").forEach(btn => {
-            btn.addEventListener("click", async () => {
-                const cancionId = btn.getAttribute("data-cancion-id");
-                const playlistId = btn.getAttribute("data-playlist-id");
-
-                if (confirm("¿Eliminar esta canción de la playlist?")) {
-                    try {
-                        const deleteRes = await fetch(`http://localhost:8080/playlist/${playlistId}/song/${cancionId}`, {
-                            method: "DELETE",
-                            headers: {
-                                "Authorization": `Bearer ${token}`
-                            }
-                        });
-
-                        if (deleteRes.ok) {
-                            alert("Canción eliminada correctamente.");
-                            mostrarCancionesDePlaylist(playlistId); // recarga las canciones
-                        } else {
-                            alert("No se pudo eliminar la canción.");
-                        }
-                    } catch (err) {
-                        console.error("Error al borrar canción:", err);
-                        alert("Error al eliminar canción.");
-                    }
-                }
-            });
-        });
 
     } catch (error) {
         console.error("Error cargando canciones:", error);
         alert("Error cargando canciones.");
     }
 };
+
+// SOLO SE DEFINE UNA VEZ — NO CAMBIA
+document.querySelector("#canciones-tbody").addEventListener("click", async (event) => {
+    const btn = event.target.closest(".borrar-cancion");
+    if (!btn) return;
+
+    const token = localStorage.getItem("token");
+    const cancionId = btn.getAttribute("data-cancion-id");
+    const playlistId = btn.getAttribute("data-playlist-id");
+
+    console.log("🗑 Borrando canción:", cancionId, "de playlist:", playlistId);
+
+    if (confirm("¿Eliminar esta canción de la playlist?")) {
+        try {
+            console.log(`http://localhost:8080/Playlist/${playlistId}/songs/${cancionId}`)
+            const deleteRes = await fetch(`http://localhost:8080/Playlist/${playlistId}/songs/${cancionId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (deleteRes.ok) {
+                alert("Canción eliminada correctamente.");
+                mostrarCancionesDePlaylist(playlistId);
+                obtenerPlaylists();
+            } else {
+                alert("No se pudo eliminar la canción.");
+            }
+        } catch (err) {
+            console.error("Error al borrar canción:", err);
+            alert("Error al eliminar canción.");
+        }
+    }
+});
+
+
