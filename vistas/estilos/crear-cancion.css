@@ -27,8 +27,9 @@ h2 {
 /* Campos del formulario */
 .campos input, .campos select {
     width: 100%;
+    box-sizing: border-box;
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 10px 12px; /* Agrega padding horizontal */
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
@@ -109,4 +110,61 @@ select:hover {
   }
   .hidden {
     display: none;
+}
+/* Centrar el botón de crear canción */
+#btnCrearcancion {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilo general para la sección de lista */
+.lista-canciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Contenedor filtro + tabla uno al lado del otro */
+.zona-filtro-tabla {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 20px;
+}
+
+/* Estilo para el contenedor del filtro */
+.contenedor-filtro {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    width: 250px;
+}
+
+/* Estilo para el botón de filtrar */
+#btnFiltrarCanciones {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnFiltrarCanciones:hover {
+    background-color: #357ABD;
+}
+
+/* Que la tabla se adapte bien */
+#tabla-canciones {
+    flex: 1;
+    min-width: 600px;
 }

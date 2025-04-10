@@ -12,14 +12,114 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("No se encontró el botón de crear playlist.");
     }
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const botonSalir = document.getElementById("btnSalir");
   
+    if (botonSalir) {
+      botonSalir.addEventListener("click", async (evento) => {
+        evento.preventDefault();
+        mostrarSpinner(true);
+        window.location.href = "menu-principal.html";
+        mostrarSpinner(false);
+      });
+    } else {
+      console.error("No se encontró el botón de crear playlist.");
+    }
+  });
   const mostrarSpinner = (mostrar) => {
     const spinner = document.querySelector(".contenedor-spinner");
     if (spinner) {
       spinner.style.display = mostrar ? "flex" : "none";
     }
   };
-  
+  const obtenerPlayListsUsuario = async () => {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("No estás autenticado.");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("http://localhost:8080/Playlist/playlists", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!respuesta.ok) {
+            const mensajeError = await respuesta.text();
+            throw new Error(`Error al obtener canciones: ${mensajeError}`);
+        }
+
+        const datos = await respuesta.json();
+        console.log("Playlists recibidas:", datos);
+
+        const playlists = Array.isArray(datos) ? datos : [];
+
+        const tablaBody = document.querySelector("#tabla-playlists tbody");
+        tablaBody.innerHTML = "";
+
+        playlists.forEach(playlist => {
+            if (!playlist.name ) {
+                console.warn("Playlist con datos incompletos:", playlist);
+                return;
+            }
+
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${playlist.name}</td>
+                <td>${playlist.songCount}</td>
+                <td>
+                    <button class="editar-playlist" data-id="${playlist.id}">✏️ Editar</button>
+                    <button class="eliminar-playlist" data-id="${playlist.id}">🗑️ Eliminar</button>
+                    <button class="ver-canciones" data-id="${playlist.id}">🎵 Canciones</button>
+                    <button class="btn-agregar-cancion" data-id="${playlist.id}">➕ Agregar Canción</button>
+                </td>
+
+            `;
+            tablaBody.appendChild(fila);
+        });
+
+        // Eventos para editar y eliminar
+        document.querySelectorAll(".editar-playlist").forEach(boton => {
+            boton.addEventListener("click", (evento) => {
+                const idPlaylist = evento.target.getAttribute("data-id");
+                editarPlaylist(idPlaylist);
+            });
+        });
+
+        document.querySelectorAll(".eliminar-playlist").forEach(boton => {
+            boton.addEventListener("click", (evento) => {
+                const idPlaylist = evento.target.getAttribute("data-id");
+                eliminarPlaylist(idPlaylist);
+            });
+        });
+
+        document.querySelectorAll(".ver-canciones").forEach(boton => {
+            boton.addEventListener("click", (evento) => {
+                const idPlaylist = evento.target.getAttribute("data-id");
+                mostrarCancionesDePlaylist(idPlaylist);
+            });
+        });
+        document.querySelectorAll(".btn-agregar-cancion").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const playlistId = btn.getAttribute("data-id");
+                mostrarCancionesParaAgregar(playlistId);
+            });
+        });
+        
+
+    } catch (error) {
+        console.error("Error obteniendo playlists:", error);
+        alert("Hubo un problema al obtener las playlists.");
+    } finally {
+        if (typeof mostrarSpinner === "function") mostrarSpinner(false);
+    }
+};
   const registrarPlaylist = async () => {
     const token = localStorage.getItem("token");
   
@@ -54,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Playlist creada correctamente.");
         // Redirigir o limpiar campos
         document.getElementById("nombre-playlist").value = "";
+        obtenerPlaylists();
       } else {
         console.error("Error al crear playlist:", texto);
         alert("Error: " + texto);

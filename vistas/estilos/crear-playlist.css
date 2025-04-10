@@ -37,13 +37,15 @@ body {
   /* Input */
   .contenedor-crear-playlist input[type="text"] {
     width: 100%;
+    box-sizing: border-box;
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 10px 12px; /* Agrega padding horizontal */
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
     background-color: white;
     color: #333;
+    cursor: pointer;
   }
   
   .contenedor-crear-playlist input[type="text"]:focus {
@@ -78,16 +80,19 @@ body {
     transition: background-color 0.3s ease;
     margin-bottom: 10px;
     display: inline-block;
+    
   }
   
   .boton-principal {
     background-color: #4A90E2;
     color: #fff;
     border: none;
+    
   }
   
   .boton-principal:hover {
     background-color: #357ABD;
+    
   }
   
   .boton-secundario {

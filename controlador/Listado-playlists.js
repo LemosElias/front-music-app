@@ -1,16 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const boton = document.getElementById("btnTogglePlaylists");
+
+    if (boton) {
+        boton.addEventListener("click", async (evento) => {
+            evento.preventDefault();
+            await obtenerPlaylists();
+        });
+    } else {
+        console.error("El botón con ID 'btnTogglePlaylists' no se encontró en el DOM.");
+    }
+});
+document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("btnListarPlaylists");
 
     if (boton) {
         boton.addEventListener("click", async (evento) => {
             evento.preventDefault();
-            await obtenerCancionesDelUsuario();
+            await obtenerPlayListsUsuario();
         });
     } else {
-        console.error("El botón con ID 'btnListarPlaylists' no se encontró en el DOM.");
+        console.error("El botón con ID 'btnTogglePlaylists' no se encontró en el DOM.");
     }
 });
-
 // Función para obtener playlists del servidor y mostrarlas en la tabla
 const obtenerPlaylists = async () => {
     if (typeof mostrarSpinner === "function") mostrarSpinner(true);

@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     let boton = document.getElementById("btnRegistrarUsuario");
+    let botonSalir = document.getElementById("buttonSalir");
+
+    if (botonSalir) {
+        botonSalir.addEventListener("click", async (evento) => {
+          evento.preventDefault();
+          mostrarSpinner(true);
+          window.location.href = "login.html";
+          mostrarSpinner(false);
+        });
+      }
 
     if (boton) {
         boton.addEventListener("click", async (evento) => {

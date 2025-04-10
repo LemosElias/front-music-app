@@ -3,7 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let botonListarUsuario = document.getElementById("btnListarMisCanciones");
     let botonListarTodas = document.getElementById("btnListarCanciones");
     let botonFiltrar = document.getElementById("btnFiltrarCanciones"); // Nuevo botón para filtrar
+    let botonSalir = document.getElementById("btnSalir");
     
+        
+      
+        if (botonSalir) {
+          botonSalir.addEventListener("click", async (evento) => {
+            evento.preventDefault();
+            mostrarSpinner(true);
+            window.location.href = "menu-principal.html";
+            mostrarSpinner(false);
+          });
+        } 
+        
+   
+      
     if (botonCrear) {
         botonCrear.addEventListener("click", async (evento) => {
             evento.preventDefault();
@@ -60,8 +74,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 if (userData.artistname) {
                     const seccionCrearCancion = document.getElementById("crear-cancion");
+                    const seccionListarCancion =document.getElementById("listados")
                     if (seccionCrearCancion) {
                         seccionCrearCancion.classList.remove("hidden");
+                    }
+                    if(seccionListarCancion){
+                        seccionListarCancion.classList.remove('hidden');
                     }
                 }
             } else {
