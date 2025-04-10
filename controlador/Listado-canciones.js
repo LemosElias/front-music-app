@@ -10,7 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("El botón con ID 'btnListarCanciones' no se encontró en el DOM.");
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+    let boton = document.getElementById("btnListarMisCanciones");
 
+    if (boton) {
+        boton.addEventListener("click", async (evento) => {
+            evento.preventDefault(); // Prevenir el envío por defecto
+            await obtenerCancionesDelUsuario(); // Llamar a la función para obtener canciones
+        });
+    } else {
+        console.error("El botón con ID 'btnListarMisCanciones' no se encontró en el DOM.");
+    }
+});
 // **Función para obtener canciones del servidor y agregarlas a la tabla**
 const obtenerCanciones = async () => {
     if (typeof mostrarSpinner === "function") mostrarSpinner(true); // Activar spinner

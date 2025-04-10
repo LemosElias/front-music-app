@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (boton) {
         boton.addEventListener("click", async (evento) => {
             evento.preventDefault();
-            await obtenerPlaylists();
+            await obtenerCancionesDelUsuario();
         });
     } else {
         console.error("El botón con ID 'btnListarPlaylists' no se encontró en el DOM.");

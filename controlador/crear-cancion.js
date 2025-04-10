@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let botonListarUsuario = document.getElementById("btnListarMisCanciones");
     let botonListarTodas = document.getElementById("btnListarCanciones");
     let botonFiltrar = document.getElementById("btnFiltrarCanciones"); // Nuevo botón para filtrar
-
+    
     if (botonCrear) {
         botonCrear.addEventListener("click", async (evento) => {
             evento.preventDefault();
@@ -41,6 +41,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        try {
+            const response = await fetch("http://localhost:8080/Artist/me", {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                console.log("Usuario desde endpoint:", userData);
+
+                if (userData.artistname) {
+                    const seccionCrearCancion = document.getElementById("crear-cancion");
+                    if (seccionCrearCancion) {
+                        seccionCrearCancion.classList.remove("hidden");
+                    }
+                }
+            } else {
+                console.warn("No se pudo obtener el usuario:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error);
+        }
+    }
+
+    
+});
+const obtenerCancionesDelUsuario = async () => {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("No estás autenticado.");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("http://localhost:8080/songs/songs/getUserSongs", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!respuesta.ok) {
+            const mensajeError = await respuesta.text();
+            throw new Error(`Error al obtener canciones: ${mensajeError}`);
+        }
+
+        const canciones = await respuesta.json();
+        console.log("Canciones del usuario:", canciones);
+        actualizarTablaCanciones(canciones); // Esta función la tenés que tener definida para renderizar las canciones
+    } catch (error) {
+        console.error("Error al obtener canciones del usuario:", error);
+        alert("No se pudieron obtener las canciones.");
+    }
+};
+
 // Función para mostrar u ocultar el spinner con verificación de existencia
 const mostrarSpinner = (mostrar) => {
     const contenedorSpinner = document.querySelector('.contenedor-spinner');
@@ -58,7 +121,7 @@ const registrarCancion = async () => {
         alert("No tienes autorización para crear una canción.");
         return;
     }
-
+    
     let campos = {
         name: document.getElementById("nombre-cancion")?.value.trim(),
         genre: document.getElementById("genero")?.value.trim(),
@@ -170,3 +233,4 @@ const filtrarCanciones = async () => {
         alert("No se pudo conectar con el servidor.");
     }
 };
+
