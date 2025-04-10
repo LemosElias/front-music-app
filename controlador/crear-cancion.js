@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         botonListarUsuario.addEventListener("click", async (evento) => {
             evento.preventDefault();
             mostrarSpinner(true);
-            await listarMisCanciones();
+            await obtenerCancionesDelUsuario();
             mostrarSpinner(false);
         });
     }
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         botonListarTodas.addEventListener("click", async (evento) => {
             evento.preventDefault();
             mostrarSpinner(true);
-            await listarTodasLasCanciones();
+            await obtenerCanciones();
             mostrarSpinner(false);
         });
     }
@@ -92,90 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     
 });
-const obtenerCancionesDelUsuario = async () => {
-    let token = localStorage.getItem("token");
-    if (!token) {
-        alert("No estás autenticado.");
-        return;
-    }
 
-    try {
-        const respuesta = await fetch("http://localhost:8080/songs/songs/getUserSongs", {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        if (!respuesta.ok) {
-            const mensajeError = await respuesta.text();
-            throw new Error(`Error al obtener canciones: ${mensajeError}`);
-        }
-
-        const canciones = await respuesta.json();
-        console.log("Canciones del usuario:", canciones);
-        actualizarTablaCanciones(canciones); // Esta función la tenés que tener definida para renderizar las canciones
-    } catch (error) {
-        console.error("Error al obtener canciones del usuario:", error);
-        alert("No se pudieron obtener las canciones.");
-    }
-};
-
-// Función para mostrar u ocultar el spinner con verificación de existencia
-const mostrarSpinner = (mostrar) => {
-    const contenedorSpinner = document.querySelector('.contenedor-spinner');
-    if (!contenedorSpinner) {
-        console.error("El elemento con clase 'contenedor-spinner' no existe en el DOM.");
-        return;
-    }
-    contenedorSpinner.style.display = mostrar ? 'flex' : 'none';
-};
-
-// Función para registrar una nueva canción
-const registrarCancion = async () => {
-    let token = localStorage.getItem("token"); 
-    if (!token) {
-        alert("No tienes autorización para crear una canción.");
-        return;
-    }
-    
-    let campos = {
-        name: document.getElementById("nombre-cancion")?.value.trim(),
-        genre: document.getElementById("genero")?.value.trim(),
-    };
-
-    if (!campos.name || !campos.genre) {
-        alert("Por favor completa todos los campos.");
-        mostrarSpinner(false);
-        return;
-    }
-
-    try {
-        const respuesta = await fetch("http://localhost:8080/songs/user/createSong", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(campos),
-        });
-
-        if (respuesta.ok) {
-            alert("Canción registrada correctamente.");
-            window.location.reload();
-        } else {
-            console.error("Error en el registro:", await respuesta.text());
-            alert("Hubo un error al registrar la canción.");
-        }
-    } catch (error) {
-        console.error("Error al conectar con el servidor:", error);
-        alert("No se pudo conectar con el servidor.");
-    } finally {
-        mostrarSpinner(false);
-    }
-};
 
 // Función para actualizar la tabla de canciones
 const actualizarTablaCanciones = (canciones) => {
@@ -246,6 +163,9 @@ const filtrarCanciones = async () => {
         const cancionesFiltradas = await respuesta.json();
         console.log("Canciones filtradas obtenidas:", cancionesFiltradas);
         actualizarTablaCanciones(cancionesFiltradas);
+         // Limpiar los campos de búsqueda
+         document.getElementById("filtro-artista").value = "";
+         document.getElementById("filtro-genero").value = "";
     } catch (error) {
         console.error("Error al conectar con el servidor:", error);
         alert("No se pudo conectar con el servidor.");

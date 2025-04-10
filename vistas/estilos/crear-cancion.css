@@ -5,6 +5,10 @@ body {
     margin: 0;
     padding: 20px;
     color: #333;
+    background-image: url('/Imagenes/FondoGestionCancion.jfif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 /* Contenedor principal */

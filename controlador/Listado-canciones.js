@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    await obtenerCanciones(); // Se ejecuta automáticamente al cargar la página
+});
 document.addEventListener("DOMContentLoaded", () => {
     let boton = document.getElementById("btnListarCanciones");
 
@@ -22,6 +25,126 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("El botón con ID 'btnListarMisCanciones' no se encontró en el DOM.");
     }
 });
+const obtenerCancionesDelUsuario = async () => {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("No estás autenticado.");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("http://localhost:8080/songs/songs/getUserSongs", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!respuesta.ok) {
+            const mensajeError = await respuesta.text();
+            throw new Error(`Error al obtener canciones: ${mensajeError}`);
+        }
+
+        const canciones = await respuesta.json();
+        console.log("Canciones del usuario:", canciones);
+        actualizarTablaCanciones(canciones); // Esta función la tenés que tener definida para renderizar las canciones
+        
+        const tablaBody = document.querySelector("#tabla-canciones tbody");
+        tablaBody.innerHTML = "";
+
+        canciones.forEach(cancion => {
+            if (!cancion.id || !cancion.name || !cancion.genre || !cancion.artist) {
+                console.warn("Canción con datos incompletos:", cancion);
+                return;
+            }
+
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${cancion.name}</td>
+                <td>${cancion.genre}</td>
+                <td>${cancion.artist.name}</td>
+                <td>
+                    <button class="editar" data-id="${cancion.id}">✏️ Editar</button>
+                    <button class="eliminar" data-id="${cancion.id}">🗑️ Eliminar</button>
+                </td>
+            `;
+            tablaBody.appendChild(fila);
+        });
+
+        document.querySelectorAll(".editar").forEach(boton => {
+            boton.addEventListener("click", (evento) => {
+                const idCancion = evento.target.getAttribute("data-id");
+                editarCancion(idCancion);
+            });
+        });
+
+        document.querySelectorAll(".eliminar").forEach(boton => {
+            boton.addEventListener("click", (evento) => {
+                const idCancion = evento.target.getAttribute("data-id");
+                eliminarCancion(idCancion);
+            });
+        });
+    } catch (error) {
+        console.error("Error al obtener canciones del usuario:", error);
+        alert("No se pudieron obtener las canciones.");
+    }
+};
+
+// Función para mostrar u ocultar el spinner con verificación de existencia
+const mostrarSpinner = (mostrar) => {
+    const contenedorSpinner = document.querySelector('.contenedor-spinner');
+    if (!contenedorSpinner) {
+        console.error("El elemento con clase 'contenedor-spinner' no existe en el DOM.");
+        return;
+    }
+    contenedorSpinner.style.display = mostrar ? 'flex' : 'none';
+};
+
+// Función para registrar una nueva canción
+const registrarCancion = async () => {
+    let token = localStorage.getItem("token"); 
+    if (!token) {
+        alert("No tienes autorización para crear una canción.");
+        return;
+    }
+    
+    let campos = {
+        name: document.getElementById("nombre-cancion")?.value.trim(),
+        genre: document.getElementById("genero")?.value.trim(),
+    };
+
+    if (!campos.name || !campos.genre) {
+        alert("Por favor completa todos los campos.");
+        mostrarSpinner(false);
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("http://localhost:8080/songs/user/createSong", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(campos),
+        });
+
+        if (respuesta.ok) {
+            alert("Canción registrada correctamente.");
+            window.location.reload();
+        } else {
+            console.error("Error en el registro:", await respuesta.text());
+            alert("Hubo un error al registrar la canción.");
+        }
+    } catch (error) {
+        console.error("Error al conectar con el servidor:", error);
+        alert("No se pudo conectar con el servidor.");
+    } finally {
+        mostrarSpinner(false);
+    }
+};
 // **Función para obtener canciones del servidor y agregarlas a la tabla**
 const obtenerCanciones = async () => {
     if (typeof mostrarSpinner === "function") mostrarSpinner(true); // Activar spinner
@@ -167,10 +290,14 @@ const eliminarCancion = async (id) => {
         if (respuesta.status === 204) {
             alert("Canción eliminada correctamente.");
             obtenerCanciones(); 
-        } else {
+        }
+        if(respuesta.status === 403){
+            alert("Debes quitar la cancion de la playlist antes");
+            obtenerCanciones(); 
+        }else {
             const mensajeError = await respuesta.text();
             alert(`Error: ${mensajeError}`);
-        }
+        } 
 
     } catch (error) {
         console.error("Error eliminando canción:", error);
